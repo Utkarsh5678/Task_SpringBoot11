@@ -42,7 +42,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
         userEmail=jwtUtil.extractUserName(jwt);
         if(StringUtils.isNotEmpty(userEmail)
             && SecurityContextHolder.getContext().getAuthentication() == null){
-            {
                 UserDetails userDetails = userService.userDetailService().loadUserByUsername(userEmail);
                 if (jwtUtil.isTokenValid(jwt,userDetails))
                 {
@@ -53,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
                     SecurityContextHolder.setContext(context);
                 }
             }
+            filterChain.doFilter(request,response);
         }
 
     }
-}
